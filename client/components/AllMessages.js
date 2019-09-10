@@ -1,23 +1,9 @@
 import React from 'react';
-import { ScrollView, FlatList, View } from 'react-native';
-import {
-  Container,
-  Text,
-  Header,
-  Title,
-  Left,
-  Input,
-  InputGroup,
-  Button,
-  Icon
-} from 'native-base';
+import { FlatList, View } from 'react-native';
+import { Text, Button, Icon } from 'native-base';
 import { ListItem } from 'react-native-elements';
-import Chatroom from './Chatroom';
 import { getUserChatroomThunk } from '../store/user';
-import MatchesFromApartment from './MatchesFromApartment';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { ngrok } from '../../client/store';
 import getOtherUser from '../util/getOtherUser';
 
 class AllMessages extends React.Component {
@@ -53,11 +39,7 @@ class AllMessages extends React.Component {
       ),
 
       headerRight: (
-        <Button
-          transparent
-          style={{ marginBottom: 4 }}
-          // onPress={() => navigation.navigate('AllMessages')}
-        >
+        <Button transparent style={{ marginBottom: 4 }}>
           <Icon
             type="FontAwesome"
             name="comments"

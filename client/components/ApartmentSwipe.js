@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView } from 'react-native';
 import {
   Container,
   Header,
@@ -7,24 +7,18 @@ import {
   DeckSwiper,
   Card,
   CardItem,
-  Thumbnail,
   Text,
   Left,
   Body,
   Icon,
   Button
 } from 'native-base';
-// import ApartmentInfo from './ApartmentInfo';
-// import SmallMapView from './SmallMapView';
 import { connect } from 'react-redux';
 import { getApartmentsThunk } from '../store/apartments';
 import { createUserApartmentThunk } from '../store/user-apartments';
 import { getUnseenApartmentsThunk } from '../store/unseen-apartments';
 import Slideshow from 'react-native-image-slider-show';
 import CacheImage from './CacheImage';
-
-//because database does not currently have images
-const tempImage = require('../images/kitten.jpeg');
 
 class ApartmentSwipe extends React.Component {
   constructor() {
@@ -244,7 +238,7 @@ class ApartmentSwipe extends React.Component {
             />
           </Container>
         ) : (
-          // <Loader />
+          // Loader
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text>Loading Apartments...</Text>
             <CacheImage
