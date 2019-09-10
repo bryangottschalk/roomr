@@ -5,7 +5,6 @@ const client = require('../db');
 router.get('/', async (req, res, next) => {
   try {
     const apartments = await Apartment.findAll({ include: [{ all: true }] });
-    console.log('TCL: apartments HERE', apartments);
     res.json(apartments);
   } catch (err) {
     next(err);

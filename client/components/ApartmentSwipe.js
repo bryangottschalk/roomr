@@ -226,9 +226,6 @@ class ApartmentSwipe extends React.Component {
                         backgroundColor: 'none'
                       }}
                       onPress={() => {
-                        console.log('CHECK HERE', item);
-                        console.log('CHECK HERE2', this.props.unseenApartments);
-                        console.log('CHECK HERE3', this.props.apartments);
                         navigation.navigate('ApartmentInfoFeed', {
                           apartment: apartments.find(apt => {
                             if (apt.id === item.id) {
