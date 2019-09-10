@@ -1,58 +1,40 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+
 import {
   View,
   Text,
   Icon,
   Content,
   Container,
-  Header,
   List,
   ListItem,
   Left,
-  Body,
-  Right,
-  Button
+  Body
 } from 'native-base';
 
-import { connect } from 'react-redux';
 import MapView, { Marker } from 'react-native-maps';
 
 class ApartmentInfoFeed extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-
       headerTitle: (
         <View style={{ flexDirection: 'row' }}>
           <Text>{navigation.state.params.apartment.name}</Text>
         </View>
-      ),
-
-
+      )
     };
-  };
-  constructor() {
-    super();
-    this.state = {};
-  }
-  findApartmentInStore = apartment => {
-    const apartmentInStore = this.props.apartments.filter(
-      apt => apt.id === apartment.id
-    );
-    return apartmentInStore;
   };
 
   render() {
     const apartment = this.props.navigation.state.params.apartment;
-    const aptInStore = this.findApartmentInStore(apartment)[0];
-    const latitude = aptInStore.longitude;
-    const longitude = aptInStore.latitude;
+    const latitude = apartment.longitude;
+    const longitude = apartment.latitude;
     const marker = { latitude: latitude, longitude: longitude };
     return (
       <Container>
         <Container>
           <Text style={{ fontSize: 12, margin: 20 }}>
-            {aptInStore.description}
+            {apartment.description}
           </Text>
           <Content>
             <List>
@@ -62,10 +44,10 @@ class ApartmentInfoFeed extends React.Component {
                 </Left>
                 <Body>
                   <Text>
-                    {aptInStore.address}, Unit {aptInStore.unit}
+                    {apartment.address}, Unit {apartment.unit}
                   </Text>
                   <Text>
-                    {aptInStore.city}, {aptInStore.state} {aptInStore.zip}
+                    {apartment.city}, {apartment.state} {apartment.zip}
                   </Text>
                 </Body>
               </ListItem>
@@ -74,7 +56,7 @@ class ApartmentInfoFeed extends React.Component {
                   <Text>Monthly rent:</Text>
                 </Left>
                 <Body>
-                  <Text>${aptInStore.monthlyRent}</Text>
+                  <Text>${apartment.monthlyRent}</Text>
                 </Body>
               </ListItem>
               <ListItem>
@@ -82,7 +64,7 @@ class ApartmentInfoFeed extends React.Component {
                   <Text>Bedrooms:</Text>
                 </Left>
                 <Body>
-                  <Text>{aptInStore.numBedrooms}</Text>
+                  <Text>{apartment.numBedrooms}</Text>
                 </Body>
               </ListItem>
               <ListItem>
@@ -90,7 +72,7 @@ class ApartmentInfoFeed extends React.Component {
                   <Text>Bathrooms:</Text>
                 </Left>
                 <Body>
-                  <Text>{aptInStore.numBathrooms}</Text>
+                  <Text>{apartment.numBathrooms}</Text>
                 </Body>
               </ListItem>
               <ListItem>
@@ -98,19 +80,19 @@ class ApartmentInfoFeed extends React.Component {
                   <Text>Pet Friendly:</Text>
                 </Left>
                 <Body>
-                  {aptInStore.petFriendly === true ? (
+                  {apartment.petFriendly === true ? (
                     <Icon
                       type="FontAwesome"
                       name="check"
                       style={{ color: 'green' }}
                     />
                   ) : (
-                      <Icon
-                        type="FontAwesome"
-                        name="times"
-                        style={{ color: 'red' }}
-                      />
-                    )}
+                    <Icon
+                      type="FontAwesome"
+                      name="times"
+                      style={{ color: 'red' }}
+                    />
+                  )}
                 </Body>
               </ListItem>
 
@@ -119,19 +101,19 @@ class ApartmentInfoFeed extends React.Component {
                   <Text>On-site parking:</Text>
                 </Left>
                 <Body>
-                  {aptInStore.parking === true ? (
+                  {apartment.parking === true ? (
                     <Icon
                       type="FontAwesome"
                       name="check"
                       style={{ color: 'green' }}
                     />
                   ) : (
-                      <Icon
-                        type="FontAwesome"
-                        name="times"
-                        style={{ color: 'red' }}
-                      />
-                    )}
+                    <Icon
+                      type="FontAwesome"
+                      name="times"
+                      style={{ color: 'red' }}
+                    />
+                  )}
                 </Body>
               </ListItem>
 
@@ -140,19 +122,19 @@ class ApartmentInfoFeed extends React.Component {
                   <Text>AC included:</Text>
                 </Left>
                 <Body>
-                  {aptInStore.ac === true ? (
+                  {apartment.ac === true ? (
                     <Icon
                       type="FontAwesome"
                       name="check"
                       style={{ color: 'green' }}
                     />
                   ) : (
-                      <Icon
-                        type="FontAwesome"
-                        name="times"
-                        style={{ color: 'red' }}
-                      />
-                    )}
+                    <Icon
+                      type="FontAwesome"
+                      name="times"
+                      style={{ color: 'red' }}
+                    />
+                  )}
                 </Body>
               </ListItem>
               <ListItem>
@@ -160,19 +142,19 @@ class ApartmentInfoFeed extends React.Component {
                   <Text>Pool:</Text>
                 </Left>
                 <Body>
-                  {aptInStore.pool === true ? (
+                  {apartment.pool === true ? (
                     <Icon
                       type="FontAwesome"
                       name="check"
                       style={{ color: 'green' }}
                     />
                   ) : (
-                      <Icon
-                        type="FontAwesome"
-                        name="times"
-                        style={{ color: 'red' }}
-                      />
-                    )}
+                    <Icon
+                      type="FontAwesome"
+                      name="times"
+                      style={{ color: 'red' }}
+                    />
+                  )}
                 </Body>
               </ListItem>
               <ListItem thumbnail>
@@ -202,10 +184,4 @@ class ApartmentInfoFeed extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    apartments: state.apartments
-  };
-};
-
-export default connect(mapStateToProps)(ApartmentInfoFeed);
+export default ApartmentInfoFeed;
