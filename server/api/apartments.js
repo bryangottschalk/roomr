@@ -22,15 +22,12 @@ router.get('/:apartmentId', async (req, res, next) => {
 
 router.get('/show/:userId', async (req, res, next) => {
   try {
-    // console.log("-------------REQ PARAMS", req.params)
-    //const seenApartments = await Apartment.findAll({ include: [User, { model: Photo, include: [Apartment] }] })
     const unseenApartments = await client.query(
       `SELECT * FROM "apartments" INNER JOIN (SELECT "id" FROM "apartments" EXCEPT (SELECT "apartmentId" FROM "user-apartments" WHERE  "userId"=${Number(
         req.params.userId
       )})) as "unseen-apartments" ON "apartments"."id" = "unseen-apartments"."id" JOIN "photos" ON "photos"."apartmentId" = "apartments"."id"`
     );
-    // console.log("UNSEEN APTS", unseenApartments[0])
-
+    console.log('TCL: unseenApartments ', unseenApartments);
     const apt = unseenApartments[0];
     const clean = [];
     for (let i = 0; i < apt.length; i++) {
@@ -65,6 +62,8 @@ router.get('/show/:userId', async (req, res, next) => {
         });
       }
     }
+    console.log('TCL: clean', clean);
+
     res.json(clean);
     // res.json(unseenApartments[0])
   } catch (err) {

@@ -1,28 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Text,
-  Thumbnail,
-  Grid,
-  Col
-} from 'native-base';
+import { Button, Icon, Text, Thumbnail } from 'native-base';
 
 import { connect } from 'react-redux';
-// import { logoutUser } from '../store/user';
-import { logoutUserThunk } from '../store/user';
-
-// import * as Font from 'expo-font';
 
 class UserProfile extends React.Component {
   state = {
@@ -161,9 +141,6 @@ class UserProfile extends React.Component {
         >
           <Button
             onPress={() => {
-              // this.props.logoutUser2();
-              // console.log('AFTER LOGOUT', this.props);
-
               this.props.navigation.navigate('HomeScreen');
             }}
             style={{

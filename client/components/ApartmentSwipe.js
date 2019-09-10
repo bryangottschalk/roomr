@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView } from 'react-native';
 import {
   Container,
   Header,
@@ -7,24 +7,18 @@ import {
   DeckSwiper,
   Card,
   CardItem,
-  Thumbnail,
   Text,
   Left,
   Body,
   Icon,
   Button
 } from 'native-base';
-// import ApartmentInfo from './ApartmentInfo';
-// import SmallMapView from './SmallMapView';
 import { connect } from 'react-redux';
 import { getApartmentsThunk } from '../store/apartments';
 import { createUserApartmentThunk } from '../store/user-apartments';
 import { getUnseenApartmentsThunk } from '../store/unseen-apartments';
 import Slideshow from 'react-native-image-slider-show';
 import CacheImage from './CacheImage';
-
-//because database does not currently have images
-const tempImage = require('../images/kitten.jpeg');
 
 class ApartmentSwipe extends React.Component {
   constructor() {
@@ -73,13 +67,11 @@ class ApartmentSwipe extends React.Component {
   };
 
   async componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        loaded: true
-      });
-    }, 3000);
     await this.props.getApartments();
     await this.props.getUnseenApartments(this.props.user);
+    this.setState({
+      loaded: true
+    });
   }
   //disable yes and no buttons for 1/2 second for async action
   pressButton = () => {
@@ -95,7 +87,13 @@ class ApartmentSwipe extends React.Component {
   };
 
   render() {
-    const { unseenApartments } = this.props;
+    const {
+      unseenApartments,
+      apartments,
+      createUserApartment,
+      user,
+      navigation
+    } = this.props;
 
     return (
       <ScrollView
@@ -104,25 +102,27 @@ class ApartmentSwipe extends React.Component {
           this.scrollView = scrollView;
         }}
       >
-        {this.props.unseenApartments.length !== 0 && this.state.loaded ? (
+        {unseenApartments.length !== 0 && this.state.loaded ? (
           <Container>
             <Header />
 
             <DeckSwiper
-              ref={c => (this._deckSwiper = c)}
+              ref={c => {
+                this._deckSwiper = c;
+              }}
               dataSource={unseenApartments}
               looping={false}
               onSwipeLeft={() => {
-                this.props.createUserApartment(
+                createUserApartment(
                   this._deckSwiper._root.state.selectedItem.id,
-                  this.props.user.id,
+                  user.id,
                   false
                 );
               }}
               onSwipeRight={() => {
-                this.props.createUserApartment(
+                createUserApartment(
                   this._deckSwiper._root.state.selectedItem.id,
-                  this.props.user.id,
+                  user.id,
                   true
                 );
               }}
@@ -169,9 +169,9 @@ class ApartmentSwipe extends React.Component {
                       onPress={() => {
                         this.pressButton();
                         this._deckSwiper._root.swipeLeft();
-                        this.props.createUserApartment(
+                        createUserApartment(
                           this._deckSwiper._root.state.selectedItem.id,
-                          this.props.user.id,
+                          user.id,
                           false
                         );
                       }}
@@ -197,9 +197,9 @@ class ApartmentSwipe extends React.Component {
                       onPress={() => {
                         this.pressButton();
                         this._deckSwiper._root.swipeRight();
-                        this.props.createUserApartment(
+                        createUserApartment(
                           this._deckSwiper._root.state.selectedItem.id,
-                          this.props.user.id,
+                          user.id,
                           true
                         );
                       }}
@@ -226,8 +226,12 @@ class ApartmentSwipe extends React.Component {
                         backgroundColor: 'none'
                       }}
                       onPress={() => {
-                        this.props.navigation.navigate('ApartmentInfoFeed', {
-                          apartment: item
+                        navigation.navigate('ApartmentInfoFeed', {
+                          apartment: apartments.find(apt => {
+                            if (apt.id === item.id) {
+                              return apt;
+                            }
+                          })
                         });
                       }}
                     >
@@ -244,7 +248,7 @@ class ApartmentSwipe extends React.Component {
             />
           </Container>
         ) : (
-          // <Loader />
+          // Loader
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text>Loading Apartments...</Text>
             <CacheImage

@@ -1,26 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, Image } from 'react-native';
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Text,
-  Thumbnail,
-  Grid,
-  Col,
-  Form,
-  Item,
-  Label,
-  Input
-} from 'native-base';
+import { Button, Text, Form, Item, Label, Input } from 'native-base';
 // import * as Font from 'expo-font';
 import { connect } from 'react-redux';
 import { setUserThunk } from '../store/user';

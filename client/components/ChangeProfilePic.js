@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  ImageEditor,
-  Image,
-  View,
-  TouchableOpacity,
-  Modal
-} from 'react-native';
+import { View } from 'react-native';
 import { Text, Button } from 'native-base';
 import { Camera } from 'expo-camera';
-// import { ImagePicker } from 'expo';
-
-import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import * as firebase from 'firebase';
 import { updateUserThunk } from '../store/user';
@@ -109,26 +100,7 @@ class ChangeProfilePic extends React.Component {
                   backgroundColor: 'transparent'
                   // flexDirection: 'row',
                 }}
-              >
-                {/* <TouchableOpacity
-                style={{
-                  justifyContent: 'center'
-                }}
-                onPress={() => {
-                  this.setState({
-                    type:
-                      this.state.type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back
-                  });
-                }}
-              >
-                <Text style={{ fontSize: 18, marginTop: 100, color: 'white' }}>
-                  {' '}
-                  Flip{' '}
-                </Text>
-              </TouchableOpacity> */}
-              </View>
+              ></View>
             </Camera>
             <View
               style={{
