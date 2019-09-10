@@ -1,16 +1,7 @@
 import React from 'react';
-import {
-  ImageEditor,
-  Image,
-  View,
-  TouchableOpacity,
-  Modal
-} from 'react-native';
+import { View } from 'react-native';
 import { Text, Button } from 'native-base';
 import { Camera } from 'expo-camera';
-// import { ImagePicker } from 'expo';
-
-import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import * as firebase from 'firebase';
 import { updateUserThunk } from '../store/user';
