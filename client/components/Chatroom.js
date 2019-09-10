@@ -4,10 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
-  FlatList,
-  Image,
   StatusBar
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';

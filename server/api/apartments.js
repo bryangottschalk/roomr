@@ -5,6 +5,7 @@ const client = require('../db');
 router.get('/', async (req, res, next) => {
   try {
     const apartments = await Apartment.findAll({ include: [{ all: true }] });
+    console.log('TCL: apartments HERE', apartments);
     res.json(apartments);
   } catch (err) {
     next(err);
@@ -27,6 +28,7 @@ router.get('/show/:userId', async (req, res, next) => {
         req.params.userId
       )})) as "unseen-apartments" ON "apartments"."id" = "unseen-apartments"."id" JOIN "photos" ON "photos"."apartmentId" = "apartments"."id"`
     );
+    console.log('TCL: unseenApartments ', unseenApartments);
     const apt = unseenApartments[0];
     const clean = [];
     for (let i = 0; i < apt.length; i++) {
@@ -61,6 +63,8 @@ router.get('/show/:userId', async (req, res, next) => {
         });
       }
     }
+    console.log('TCL: clean', clean);
+
     res.json(clean);
     // res.json(unseenApartments[0])
   } catch (err) {

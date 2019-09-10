@@ -67,13 +67,11 @@ class ApartmentSwipe extends React.Component {
   };
 
   async componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        loaded: true
-      });
-    }, 3000);
     await this.props.getApartments();
     await this.props.getUnseenApartments(this.props.user);
+    this.setState({
+      loaded: true
+    });
   }
   //disable yes and no buttons for 1/2 second for async action
   pressButton = () => {
@@ -89,7 +87,13 @@ class ApartmentSwipe extends React.Component {
   };
 
   render() {
-    const { unseenApartments } = this.props;
+    const {
+      unseenApartments,
+      apartments,
+      createUserApartment,
+      user,
+      navigation
+    } = this.props;
 
     return (
       <ScrollView
@@ -98,25 +102,27 @@ class ApartmentSwipe extends React.Component {
           this.scrollView = scrollView;
         }}
       >
-        {this.props.unseenApartments.length !== 0 && this.state.loaded ? (
+        {unseenApartments.length !== 0 && this.state.loaded ? (
           <Container>
             <Header />
 
             <DeckSwiper
-              ref={c => (this._deckSwiper = c)}
+              ref={c => {
+                this._deckSwiper = c;
+              }}
               dataSource={unseenApartments}
               looping={false}
               onSwipeLeft={() => {
-                this.props.createUserApartment(
+                createUserApartment(
                   this._deckSwiper._root.state.selectedItem.id,
-                  this.props.user.id,
+                  user.id,
                   false
                 );
               }}
               onSwipeRight={() => {
-                this.props.createUserApartment(
+                createUserApartment(
                   this._deckSwiper._root.state.selectedItem.id,
-                  this.props.user.id,
+                  user.id,
                   true
                 );
               }}
@@ -163,9 +169,9 @@ class ApartmentSwipe extends React.Component {
                       onPress={() => {
                         this.pressButton();
                         this._deckSwiper._root.swipeLeft();
-                        this.props.createUserApartment(
+                        createUserApartment(
                           this._deckSwiper._root.state.selectedItem.id,
-                          this.props.user.id,
+                          user.id,
                           false
                         );
                       }}
@@ -191,9 +197,9 @@ class ApartmentSwipe extends React.Component {
                       onPress={() => {
                         this.pressButton();
                         this._deckSwiper._root.swipeRight();
-                        this.props.createUserApartment(
+                        createUserApartment(
                           this._deckSwiper._root.state.selectedItem.id,
-                          this.props.user.id,
+                          user.id,
                           true
                         );
                       }}
@@ -220,8 +226,15 @@ class ApartmentSwipe extends React.Component {
                         backgroundColor: 'none'
                       }}
                       onPress={() => {
-                        this.props.navigation.navigate('ApartmentInfoFeed', {
-                          apartment: item
+                        console.log('CHECK HERE', item);
+                        console.log('CHECK HERE2', this.props.unseenApartments);
+                        console.log('CHECK HERE3', this.props.apartments);
+                        navigation.navigate('ApartmentInfoFeed', {
+                          apartment: apartments.find(apt => {
+                            if (apt.id === item.id) {
+                              return apt;
+                            }
+                          })
                         });
                       }}
                     >
