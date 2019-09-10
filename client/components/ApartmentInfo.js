@@ -3,11 +3,6 @@ import React from 'react';
 import { View, Text } from 'native-base';
 
 class ApartmentInfo extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   render() {
     const { apartment } = this.props;
     return (

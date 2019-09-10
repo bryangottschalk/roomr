@@ -1,23 +1,9 @@
 import React from 'react';
-import { ScrollView, FlatList, View } from 'react-native';
-import {
-  Container,
-  Text,
-  Header,
-  Title,
-  Left,
-  Input,
-  InputGroup,
-  Button,
-  Icon
-} from 'native-base';
+import { FlatList, View } from 'react-native';
+import { Text, Button, Icon } from 'native-base';
 import { ListItem } from 'react-native-elements';
-import Chatroom from './Chatroom';
 import { getUserChatroomThunk } from '../store/user';
-import MatchesFromApartment from './MatchesFromApartment';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { ngrok } from '../../client/store';
 import getOtherUser from '../util/getOtherUser';
 
 class AllMessages extends React.Component {
@@ -53,11 +39,7 @@ class AllMessages extends React.Component {
       ),
 
       headerRight: (
-        <Button
-          transparent
-          style={{ marginBottom: 4 }}
-          // onPress={() => navigation.navigate('AllMessages')}
-        >
+        <Button transparent style={{ marginBottom: 4 }}>
           <Icon
             type="FontAwesome"
             name="comments"
@@ -83,7 +65,6 @@ class AllMessages extends React.Component {
 
   findUserInStore(match) {
     const userInStore = this.props.users.filter(user => user.id === match);
-    // console.log('---------------- USER IN STORE', userInStore)
     return userInStore;
   }
 
@@ -104,17 +85,13 @@ class AllMessages extends React.Component {
     <FlatList title={`${item.firstName}`} avatar={`${item.photo}`} />
   );
   render() {
-    const props = this.props.navigation.state.params;
-    console.log('PROPSUSER', this.props);
     if (!this.props.user) {
-      console.log('HERE NO USER');
       return (
         <View>
           <Text>Sorry no messages yet</Text>
         </View>
       );
     } else if (!this.props.user.chatrooms) {
-      console.log('HERE NO CHATS');
       return (
         <View>
           <Text>Sorry no messages yet</Text>
@@ -122,16 +99,12 @@ class AllMessages extends React.Component {
       );
     } else {
       return this.props.user.chatrooms.map(chat => {
-        console.log('HERE I AM', this.props.users[chat.user1Id - 1]);
-        console.log('CHAT1', chat.user1Id);
-        console.log('CHAT', chat);
         if (chat.user1Id !== this.props.user.id)
           return (
             <View style={{ height: 65 }}>
               <FlatList
                 data={[this.props.users[chat.user1Id - 1]]}
                 renderItem={({ item }) => {
-                  console.log('ITEM', item);
                   return (
                     <ListItem
                       key={item.id}
@@ -144,9 +117,7 @@ class AllMessages extends React.Component {
                             this.props.user,
                             chat
                           ),
-                          chatId: `chat${
-                            this.props.users[chat.user1Id - 1].id
-                          }-${this.props.users[chat.user2Id - 1].id}`
+                          chatId: `chat${this.props.users[chat.user1Id - 1].id}-${this.props.users[chat.user2Id - 1].id}`
                         });
                       }}
                       title={
@@ -173,7 +144,6 @@ class AllMessages extends React.Component {
               <FlatList
                 data={[this.props.users[chat.user2Id - 1]]}
                 renderItem={({ item }) => {
-                  console.log('ITEM2', item);
                   return (
                     <ListItem
                       key={item.id}
@@ -186,9 +156,7 @@ class AllMessages extends React.Component {
                             this.props.user,
                             chat
                           ),
-                          chatId: `chat${
-                            this.props.users[chat.user1Id - 1].id
-                          }-${this.props.users[chat.user2Id - 1].id}`
+                          chatId: `chat${this.props.users[chat.user1Id - 1].id}-${this.props.users[chat.user2Id - 1].id}`
                         });
                       }}
                       title={
@@ -212,13 +180,6 @@ class AllMessages extends React.Component {
         }
       });
     }
-
-    //   return this.props.user.chatrooms.map(chat => {
-    //     <Text>Hello</Text>;
-    //       <ScrollView>
-
-    //       </ScrollView>
-    //   });
   }
 }
 

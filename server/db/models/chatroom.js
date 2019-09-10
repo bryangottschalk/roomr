@@ -14,23 +14,15 @@ Chatroom.findOrCreateChat = async function(user1Id, user2Id) {
         [Sequelize.Op.or]: [user1Id, user2Id]
       }
     }
-    //   include: [db.models.message],
-    //   order: [[db.models.message, 'createdAt', 'DESC']]
   });
 
   if (chatroom) {
     return chatroom;
   } else {
-    return await Chatroom.create(
-      {
-        user1Id: user1Id,
-        user2Id: user2Id
-      },
-      {
-        //   include: [db.models.message],
-        //   order: [[db.models.message, 'createdAt', 'DESC']]
-      }
-    );
+    await Chatroom.create({
+      user1Id: user1Id,
+      user2Id: user2Id
+    });
   }
 };
 module.exports = Chatroom;

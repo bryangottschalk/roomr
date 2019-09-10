@@ -2,7 +2,15 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'native-base';
 import { connect } from 'react-redux';
-// import * as Font from 'expo-font';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
 
 class Home extends React.Component {
   render() {
@@ -49,14 +57,5 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 export default connect(mapStateToProps)(Home);
